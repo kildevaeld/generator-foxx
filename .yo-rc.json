@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Rasmus Kildevæld",
+      "authorEmail": "rasmuskildevaeld@gmail.com",
+      "authorUrl": ""
+    }
+  }
+}
