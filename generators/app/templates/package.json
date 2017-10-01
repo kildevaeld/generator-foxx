@@ -8,6 +8,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-typescript": "^3.2.2",
     "gulp-zip": "^4.0.0",
+    "gulp-util": "^3.0.8",
     "typescript": "^2.5.3",
     "@types/joi": "^10.4.0",
     "@types/http-errors": "^1.6.0",

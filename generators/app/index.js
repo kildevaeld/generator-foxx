@@ -8,7 +8,8 @@ module.exports = class extends Generator {
     // Have Yeoman greet the user.
     this.log(yosay('Welcome to the lovely ' + chalk.red('Foxx') + ' generator!'));
 
-    const prompts = [{
+    const prompts = [
+      {
         type: 'input',
         name: 'name',
         message: 'Name'
@@ -27,12 +28,14 @@ module.exports = class extends Generator {
       {
         type: 'input',
         name: 'database',
-        message: 'Database'
+        message: 'Database',
+        default: ctx => ctx.name + '_database'
       },
       {
         type: 'input',
         name: 'mount',
-        message: 'Mount'
+        message: 'Mount',
+        default: ctx => '/' + ctx.name.toLowerCase()
       }
     ];
 
@@ -44,7 +47,26 @@ module.exports = class extends Generator {
 
   writing() {
     let locals = this.props;
-    this.fs.copyTpl(
+
+    const templates = [
+      'manifest.json',
+      'package.json',
+      'gulpfile.js',
+      'tsconfig.json',
+      'docker-compose.yml'
+    ];
+
+    templates.forEach(fileName =>
+      this.fs.copyTpl(this.templatePath(fileName), this.destinationPath(fileName), locals)
+    );
+
+    const files = ['src', 'scripts', 'typings', 'tsconfig.json', '.gitignore'];
+
+    files.forEach(path =>
+      this.fs.copy(this.templatePath(path), this.destinationPath(path))
+    );
+
+    /* This.fs.copyTpl(
       this.templatePath('manifest.json'),
       this.destinationPath('manifest.json'),
       locals
@@ -60,19 +82,22 @@ module.exports = class extends Generator {
       this.templatePath('gulpfile.js'),
       this.destinationPath('gulpfile.js'),
       locals
-    );
+    ); */
 
-    this.fs.copy(
+    /* this.fs.copy(
       this.templatePath('tsconfig.json'),
       this.destinationPath('tsconfig.json')
     );
     this.fs.copy(this.templatePath('src'), this.destinationPath('src'));
     this.fs.copy(this.templatePath('scripts'), this.destinationPath('scripts'));
-    this.fs.copy(this.templatePath('typings'), this.destinationPath('typings'));
+    this.fs.copy(this.templatePath('typings'), this.destinationPath('typings')); */
     // this.fs.copy(this.templatePath('test'), this.destinationPath('test'));
   }
 
   install() {
-    this.installDependencies();
+    this.installDependencies({
+      npm: true,
+      bower: false
+    });
   }
 };
