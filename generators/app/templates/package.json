@@ -1,7 +1,7 @@
 {
   "name": "<%= name %>",
   "version": "0.0.1",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "devDependencies": {
     "arangojs": "^5.7.0",
     "gulp": "^3.9.1",
